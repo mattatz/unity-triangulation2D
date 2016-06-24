@@ -2,6 +2,7 @@
  * @author mattatz / http://mattatz.github.io
  *
  * Ruppert's Delaunay Refinement Algorithm
+ * Jim Ruppert. A Delaunay Refinement Algorithm for Quality 2-Dimensional Mesh Generation / http://www.cis.upenn.edu/~cis610/ruppert.pdf
  * The Quake Group at Carnegie Mellon University / https://www.cs.cmu.edu/~quake/tripaper/triangle3.html
  * Wikipedia / https://en.wikipedia.org/wiki/Ruppert%27s_algorithm
  * ETH zurich CG13 Chapter 7 / http://www.ti.inf.ethz.ch/ew/Lehre/CG13/lecture/Chapter%207.pdf

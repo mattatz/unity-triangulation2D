@@ -2,16 +2,20 @@ unity-triangulation2D
 =====================
 
 Delaunay Triangulation and Ruppert's Delaunay Refinement Algorithm in Unity.
-![drawing](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/drawing.gif)
+
+![drawing](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/drawing.gif =250px)
 
 Input contour points for [planar straight-line graph](https://en.wikipedia.org/wiki/Planar_straight-line_graph)
-![input](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/input.png)
+
+![input](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/input.png =250x)
 
 Delaunay Triangulation
-![triangulation](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/delaunay_triangulation.png)
+
+![triangulation](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/delaunay_triangulation.png =250x)
 
 Mesh Refinement with minimum angle α(22.5)
-![refinement](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/mesh_refinement.png)
+
+![refinement](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/mesh_refinement.png =250x)
 
 ## Usage
 
@@ -42,6 +46,8 @@ Mesh mesh = triangulation.Build();
 ![demo](https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/demo.gif)
 
 ## Sources
+
+- Jim Ruppert. A Delaunay Refinement Algorithm for Quality 2-Dimensional Mesh Generation / http://www.cis.upenn.edu/~cis610/ruppert.pdf
 
 - Ruppert's algorithm - https://en.wikipedia.org/wiki/Ruppert%27s_algorithm
 
