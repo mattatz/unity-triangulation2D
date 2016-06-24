@@ -3,19 +3,19 @@ unity-triangulation2D
 
 Delaunay Triangulation and Ruppert's Delaunay Refinement Algorithm in Unity.
 
-<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/drawing.gif" width="250px">
+<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/drawing.gif" width="350px">
 
 Input contour points for [planar straight-line graph](https://en.wikipedia.org/wiki/Planar_straight-line_graph)
 
-<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/input.png" width="250px">
+<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/input.png" width="350px">
 
 Delaunay Triangulation
 
-<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/delaunay_triangulation.png" width="250px">
+<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/delaunay_triangulation.png" width="350px">
 
 Mesh Refinement with minimum angle α(22.5)
 
-<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/mesh_refinement.png" width="250px">
+<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/mesh_refinement.png" width="350px">
 
 ## Usage
 
@@ -43,7 +43,7 @@ Mesh mesh = triangulation.Build();
 
 ## Demo
 
-<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/demo.gif" width="250px">
+<img src="https://raw.githubusercontent.com/mattatz/unity-triangulation2D/master/Captures/demo.gif" width="350px">
 
 ## Sources
 
