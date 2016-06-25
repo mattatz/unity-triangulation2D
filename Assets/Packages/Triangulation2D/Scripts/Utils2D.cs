@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace mattatz.Triangulation2D {
+namespace mattatz.Triangulation2DSystem {
 
 	public class Utils2D {
 

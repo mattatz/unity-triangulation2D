@@ -15,7 +15,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace mattatz.Triangulation2D {
+namespace mattatz.Triangulation2DSystem {
 
 	public class Triangulation2D {
 
@@ -155,7 +155,7 @@ namespace mattatz.Triangulation2D {
 			Vector2 min, max;
 			Bound(points, out min, out max);
 
-			var external = AddExternalTriangle(min, max);
+			AddExternalTriangle(min, max);
 
 			for(int i = 0, n = points.Length; i < n; i++) {
 				var v = points[i];

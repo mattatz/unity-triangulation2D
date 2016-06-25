@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace mattatz.Triangulation2D {
+namespace mattatz.Triangulation2DSystem.Example {
 
 	[RequireComponent (typeof(MeshFilter))]
 	[RequireComponent (typeof(Rigidbody))]

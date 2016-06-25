@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 using mattatz.Utils;
 
-namespace mattatz.Triangulation2D {
+namespace mattatz.Triangulation2DSystem.Example {
 
 	public class Demo : MonoBehaviour {
 
