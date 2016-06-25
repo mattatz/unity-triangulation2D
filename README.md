@@ -47,7 +47,7 @@ Mesh mesh = triangulation.Build();
 
 ## Sources
 
-- Jim Ruppert. A Delaunay Refinement Algorithm for Quality 2-Dimensional Mesh Generation / http://www.cis.upenn.edu/~cis610/ruppert.pdf
+- Jim Ruppert. A Delaunay Refinement Algorithm for Quality 2-Dimensional Mesh Generation - http://www.cis.upenn.edu/~cis610/ruppert.pdf
 
 - Ruppert's algorithm - https://en.wikipedia.org/wiki/Ruppert%27s_algorithm
 
