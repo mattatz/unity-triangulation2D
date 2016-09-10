@@ -40,6 +40,32 @@ namespace mattatz.Triangulation2DSystem {
 			return (Midpoint() - p).magnitude < radius;
 		}
 
+		const float epsilon = 0.0001f;
+		public bool On (Vector2 p) {
+			if(HasPoint(p)) return true;
+			if(Distance(p) > epsilon) return false;
+
+			Vector2 p0 = a.Coordinate, p1 = b.Coordinate;
+			bool bx = (p0.x < p1.x) ? (p0.x <= p.x && p.x <= p1.x) : (p1.x <= p.x && p.x <= p0.x);
+			bool by = (p0.y < p1.y) ? (p0.y <= p.y && p.y <= p1.y) : (p1.y <= p.y && p.y <= p0.y);
+			return bx && by;
+		}
+
+		public bool On (Vertex2D v) {
+			return On(v.Coordinate);
+		}
+
+		// https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
+		public float Distance (Vector2 p) {
+			Vector2 p0 = a.Coordinate, p1 = b.Coordinate;
+			float dx = (p1.x - p0.x), dy = (p1.y - p0.y);
+			return Mathf.Abs((dy * p.x) - (dx * p.y) + (p1.x * p0.y) - (p1.y * p0.x)) / Mathf.Sqrt(dy * dy + dx * dx);
+		}
+
+		public float Distance (Vertex2D v) {
+			return Distance(v.Coordinate);
+		}
+
 		public bool HasPoint (Vertex2D v) {
 			return (a == v) || (b == v);
 		}

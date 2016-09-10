@@ -50,6 +50,12 @@ namespace mattatz.Triangulation2DSystem {
 			return c;
 		}
 
+		public Vertex2D[] ExcludePoint (Vector2 p) {
+			if(p == a.Coordinate) return new Vertex2D[] { b, c };
+			else if(p == b.Coordinate) return new Vertex2D[] { a, c };
+			return new Vertex2D[] { a, b };
+		}
+
 		public Segment2D[] ExcludeSegment (Segment2D s) {
 			if(s0.Equals(s)) {
 				return new Segment2D[] { s1, s2 };
@@ -57,6 +63,24 @@ namespace mattatz.Triangulation2DSystem {
 				return new Segment2D[] { s0, s2 };
 			}
 			return new Segment2D[] { s0, s1 };
+		}
+
+		public Segment2D CommonSegment (Vertex2D v0, Vertex2D v1) {
+			if(s0.HasPoint(v0) && s0.HasPoint(v1)) {
+				return s0;
+			} else if(s1.HasPoint(v0) && s1.HasPoint(v1)) {
+				return s1;
+			}
+			return s2;
+		}
+
+		public Segment2D[] CommonSegments (Vertex2D v) {
+			if(s0.HasPoint(v) && s1.HasPoint(v)) {
+				return new [] {s0, s1};
+			} else if(s1.HasPoint(v) && s2.HasPoint(v)) {
+				return new [] {s1, s2};
+			}
+			return new [] {s0, s2};
 		}
 
 		public Vector2 Circumcenter () {

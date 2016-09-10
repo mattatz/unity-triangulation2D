@@ -19,9 +19,12 @@ namespace mattatz.Triangulation2DSystem {
 
 	public class Triangulation2D {
 
-		const float kAngleMin = 10f, kAngleMax = 30f;
+		const float kAngleMax = 30f;
 
+		public Polygon2D Polygon { get { return PSLG; } }
 		public Triangle2D[] Triangles { get { return T.ToArray(); } }
+		public List<Segment2D> Edges { get { return E; } }
+		public List<Vertex2D> Points { get { return P; } }
 
 		List<Vertex2D> V = new List<Vertex2D>(); // vertices in PSLG
 		List<Segment2D> S = new List<Segment2D>(); // segments in PSLG
@@ -33,7 +36,7 @@ namespace mattatz.Triangulation2DSystem {
 		List<Triangle2D> T = new List<Triangle2D>();
 
 		public Triangulation2D (Polygon2D polygon, float angle = 20f, float threshold = 0.1f) {
-			angle = Mathf.Clamp(angle, kAngleMin, kAngleMax) * Mathf.Deg2Rad;
+			angle = Mathf.Min(angle, kAngleMax) * Mathf.Deg2Rad;
 
 			PSLG = polygon;
 			V = PSLG.Vertices.ToList();
@@ -42,47 +45,53 @@ namespace mattatz.Triangulation2DSystem {
 		}
 
 		public Mesh Build () {
+			return Build((Vertex2D v) => {
+				var xy = v.Coordinate;
+				return new Vector3(xy.x, xy.y, 0f);
+			});
+		}
+
+		public Mesh Build (Func<Vertex2D, Vector3> coord) {
 			var mesh = new Mesh();
 
 			var vertices = P.Select(p => { 
-				var xy = p.Coordinate;
-				var v = new Vector3(xy.x, xy.y, 0f);
-				return v;
+				return coord(p);
 			}).ToArray();
 
-			var triangles = new int[T.Count * 3];
+			var triangles = new List<int>();
 			for(int i = 0, n = T.Count; i < n; i++) {
 				var t = T[i];
-				var i3 = i * 3;
-
 				int a = P.IndexOf(t.a), b = P.IndexOf(t.b), c = P.IndexOf(t.c);
+				if(a < 0 || b < 0 || c < 0) {
+					// Debug.Log(a + " : " + b + " : " + c);
+					continue;
+				}
 				if(Utils2D.LeftSide(t.a.Coordinate, t.b.Coordinate, t.c.Coordinate)) {
-					triangles[i3] = a;
-					triangles[i3 + 1] = c;
-					triangles[i3 + 2] = b;
+					triangles.Add(a); triangles.Add(c); triangles.Add(b);
 				} else {
-					triangles[i3] = a;
-					triangles[i3 + 1] = b;
-					triangles[i3 + 2] = c;
+					triangles.Add(a); triangles.Add(b); triangles.Add(c);
 				}
 			}
 
 			mesh.vertices = vertices;
-			mesh.SetTriangles(triangles, 0);
+			mesh.SetTriangles(triangles.ToArray(), 0);
 			mesh.RecalculateNormals();
 
 			return mesh;
 		}
 
 		int FindVertex (Vector2 p, List<Vertex2D> Vertices) {
-			return Vertices.FindIndex (v => v.Coordinate == p);
+			return Vertices.FindIndex (v => { 
+				return v.Coordinate == p;
+				// return Mathf.Approximately(v.Coordinate.x, p.x) && Mathf.Approximately(v.Coordinate.y, p.y);
+			});
 		}
 
 		int FindSegment (Vertex2D a, Vertex2D b, List<Segment2D> Segments) {
 			return Segments.FindIndex (s => (s.a == a && s.b == b) || (s.a == b && s.b == a));
 		}
 
-		Vertex2D CheckAndAddVertex (Vector2 coord) {
+		public Vertex2D CheckAndAddVertex (Vector2 coord) {
 			var idx = FindVertex(coord, P);
 			if(idx < 0) {
 				var v = new Vertex2D(coord);
@@ -92,7 +101,7 @@ namespace mattatz.Triangulation2DSystem {
 			return P[idx];
 		}
 
-		Segment2D CheckAndAddSegment (Vertex2D a, Vertex2D b) {
+		public Segment2D CheckAndAddSegment (Vertex2D a, Vertex2D b) {
 			var idx = FindSegment(a, b, E);
 			Segment2D s;
 			if(idx < 0) {
@@ -105,7 +114,7 @@ namespace mattatz.Triangulation2DSystem {
 			return s;
 		}
 
-		Triangle2D AddTriangle (Vertex2D a, Vertex2D b, Vertex2D c) {
+		public Triangle2D AddTriangle (Vertex2D a, Vertex2D b, Vertex2D c) {
 			var s0 = CheckAndAddSegment(a, b);
 			var s1 = CheckAndAddSegment(b, c);
 			var s2 = CheckAndAddSegment(c, a);
@@ -114,14 +123,21 @@ namespace mattatz.Triangulation2DSystem {
 			return t;
 		}
 
-		void RemoveTriangle (Triangle2D t) {
-			T.Remove(t);
+		public void RemoveTriangle (Triangle2D t) {
+			var idx = T.IndexOf(t);
+			if(idx < 0) return;
+
+			T.RemoveAt(idx);
 			if(t.s0.Decrement() <= 0) RemoveSegment (t.s0);
 			if(t.s1.Decrement() <= 0) RemoveSegment (t.s1);
 			if(t.s2.Decrement() <= 0) RemoveSegment (t.s2);
 		}
 
-		void RemoveSegment (Segment2D s) {
+		public void RemoveTriangle (Segment2D s) {
+			T.FindAll(t => t.HasSegment(s)).ForEach(t => RemoveTriangle(t));
+		}
+
+		public void RemoveSegment (Segment2D s) {
 			E.Remove(s);
 			if(s.a.ReferenceCount <= 0) P.Remove(s.a);
 			if(s.b.ReferenceCount <= 0) P.Remove(s.b);
